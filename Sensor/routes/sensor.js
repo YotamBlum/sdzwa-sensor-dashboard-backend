@@ -6,7 +6,7 @@ router.get('/', async (req, res) => {
     const sensors = await sensor.findMany({
         select: {
             id: true,
-            username: true,
+            name: true,
             posts: true
         },
         where: {
@@ -16,15 +16,16 @@ router.get('/', async (req, res) => {
 
     res.json(sensors);
 });
+
  
 router.post('/', async (req, res) => {
-    const {username} = req.body;
+    const {name} = req.body;
     const sensorExists = await sensor.findUnique({
         where: {
-            username: username
+            name: name
         },
         select: {
-            username: true
+            name: true
         }
     });
 
@@ -36,7 +37,7 @@ router.post('/', async (req, res) => {
 
     const newSensor = await sensor.create({
         data: {
-            username: username
+            name: name
         }
     });
 

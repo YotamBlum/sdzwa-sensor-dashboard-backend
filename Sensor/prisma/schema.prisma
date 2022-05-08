@@ -13,8 +13,42 @@ datasource db {
 model Sensor {
     @@map(name: "sensor")
     id          Int @id @default(autoincrement())
-    username        String @db.VarChar(255) @unique
-    posts       Post[]
+    name        String @default("")
+    description String  @default("")
+    type        Int @default(-1)// separate table to enumerate types
+    locationX    Float @default(0)
+    locationY    Float  @default(0)
+    dateStr     String  @default("")
+    status     Int @default(3)// separate table to enumerate statuses
+    installedAt   Float @default(0)// date installed at zoo
+    updatedAt  Float @default(0)// date updated 
+    posts     Post[] // for testing
+}
+
+model User {
+    @@map(name: "user")
+    user_id          Int @id @default(autoincrement())
+    firstName        String @db.VarChar(255)
+    lastName        String @db.VarChar(255)
+    email        String @db.VarChar(255) @unique
+    password        String @db.VarChar(255)
+    salt        String @db.VarChar(255)
+    // sensor_ids  Sensor[] @relation(fields: [sensor_id], references: [id])
+}
+
+model Type {
+    @@map(name: "type")
+    type_0 String @db.VarChar(255) @unique // Camera
+    type_1 String @db.VarChar(255) @unique // Motion
+    type_2 String @db.VarChar(255) @unique // Thermal
+}
+
+model Status {
+    @@map(name: "status")
+    status_0 String @db.VarChar(255) @unique // Idle
+    status_1 String @db.VarChar(255) @unique // Active
+    status_2 String @db.VarChar(255) @unique // Not Active
+    status_3 String @db.VarChar(255) @unique // Needs Attention
 }
 
 model Post {
@@ -26,6 +60,4 @@ model Post {
     updated_at   DateTime @updatedAt
     sensor      Sensor @relation(fields: [sensor_id], references: [id])
     sensor_id      Int
-
-
 }
