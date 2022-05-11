@@ -1,18 +1,21 @@
 const express = require('express');
-const app = express();
+const routes = require('./routes/users');
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-})
+const app = express();
+const port = 5000;
 
 app.use(express.json());
 
-app.use('/api/sensor', require('./routes/sensor'));
-app.use('/api/post', require('./routes/post'));
+app.use('/', routes); // to use routes
 
+// app.get('/', (req, res) => {
+    // res.send('Hello World!');
+// })
 
+// app.use('/api/sensor', require('./routes/sensor'));
+// app.use('/api/post', require('./routes/post'));
 
-app.listen(5000, () => {
-    console.log('Server is running on port 5000');
-}) 
+app.listen(port, () => {
+    console.log('Server is running on port 5000. Docker on 41960');
+})
 

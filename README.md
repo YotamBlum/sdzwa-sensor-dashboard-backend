@@ -8,7 +8,7 @@ docker build . -t <your username>/node-web-app
 
 Run image with this command
 ```
-docker run -p 49160:8080 -d <your username>/node-web-app
+docker run -p 49160:5000 -d <your username>/node-web-app
 ```
 Call this command to get port that the Docker app was mapped to to call
 ```

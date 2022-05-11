@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
         }
     });
 
-    res.json(newPost); 
+    res.json(newPost);
 
 })
 
@@ -45,7 +45,7 @@ router.get('/', async (req, res) => {
         });
     }
 
-    
+
     const posts = await post.findMany({
         select: {
             title: true,
@@ -60,7 +60,7 @@ router.get('/', async (req, res) => {
             sensor_id: sensor_id
         }
     });
-    
+
     return res.json(posts);
 
 });
