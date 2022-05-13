@@ -12,7 +12,7 @@ datasource db {
 
 model Sensor {
     id          Int    @id @default(autoincrement())
-    name        String @unique
+    name        String @default("") @unique
     description String @default("")
     type        Int    @default(-1) // separate table to enumerate types
     locationX   Float  @default(0)
