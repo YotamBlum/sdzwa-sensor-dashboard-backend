@@ -13,7 +13,7 @@ datasource db {
 model Sensor {
     id          Int    @id @default(autoincrement())
     name        String @default("") @unique
-    description String @default("")
+    description String @default("description")
     type        Int    @default(-1) // separate table to enumerate types
     locationX   Float  @default(0)
     locationY   Float  @default(0)
@@ -22,6 +22,7 @@ model Sensor {
     installedAt Float  @default(0) // date installed at zoo
     updatedAt   Float  @default(0) // date updated
     posts       Post[] // for testing
+    
 
     @@map(name: "sensor")
 }
