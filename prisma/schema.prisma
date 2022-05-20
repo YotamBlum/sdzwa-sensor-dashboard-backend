@@ -21,7 +21,9 @@ model Sensor {
     status      Int    @default(3) // separate table to enumerate statuses
     installedAt Float  @default(0) // date installed at zoo
     updatedAt   Float  @default(0) // date updated
+    url         String @default("") //url location of the sensor data
     posts       Post[] // for testing
+
     
 
     @@map(name: "sensor")
@@ -40,18 +42,18 @@ model User {
 }
 
 model Type {
-    type_0 String @unique // Camera
-    type_1 String @unique // Motion
-    type_2 String @unique // Thermal
+    type_id Int @unique // Camera
+    type_name String @unique // Motion
+    //type_2 String @unique // Thermal
 
     @@map(name: "type")
 }
 
 model Status {
-    status_0 String @unique // Idle
-    status_1 String @unique // Active
-    status_2 String @unique // Not Active
-    status_3 String @unique // Needs Attention
+    status_id Int @unique // Idle
+    status_name String @unique // Active
+    //status_2 String @unique // Not Active
+    //status_3 String @unique // Needs Attention
 
     @@map(name: "status")
 }
