@@ -4,7 +4,7 @@ const {user} = new PrismaClient();
 const crypto = require('crypto');
 
 // Create new user
-const newUser = (req, res, next) => {
+const newUser = async (req, res, next) => {
   const userExists = await user.findUnique({
         where: {
             email: req.body.email
