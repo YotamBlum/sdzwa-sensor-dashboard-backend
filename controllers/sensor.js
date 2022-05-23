@@ -54,7 +54,7 @@ const getSensorByName = async (req, res) => {
 
         }
     });
-    
+
     if (!sensors) {
         return res.status(400).json({
             msg: 'Sensor NOT found'
@@ -76,7 +76,7 @@ const updateSensorById = async (req, res) => {
                 name: true
             }
         });
-        
+
         if(sensorExists) {
             return res.status(400).json({
                 msg: 'Sensor with name = ' + req.body.name + ' already exists, choose another name'
@@ -118,7 +118,7 @@ const deleteSensorByName = async (req, res) => {
             name: true
         }
     });
-    
+
     if(!sensorExists) {
         return res.status(400).json({
             msg: 'Sensor NOT found'
@@ -135,7 +135,6 @@ const deleteSensorByName = async (req, res) => {
 };
 
 const createSensorByName = async (req, res) => {
-        
     const sensorExists = await sensor.findUnique({
         where: {
             name: req.body.name
@@ -149,7 +148,7 @@ const createSensorByName = async (req, res) => {
             msg: 'Sensor already exists'
         });
     }
-    
+
 
     const newSensor = await sensor.create({
         data: {
