@@ -153,9 +153,14 @@ const createSensorByName = async (req, res) => {
     const newSensor = await sensor.create({
         data: {
             name: req.body.name,
-            installedAt: req.body.installedAt
+            installedAt: req.body.installedAt,
+            description: req.body.description,
+            type: req.body.type,
+            locationX: req.body.locationX,
+            locationY: req.body.locationY
         }
     });
+
 
     res.json(newSensor);
 };

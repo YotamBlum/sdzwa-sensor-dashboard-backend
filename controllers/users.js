@@ -7,7 +7,7 @@ const newUser = async (req, res) => {
     // Get user inputs
     const { first_name, last_name, email, password } = req.body;
     // Validate user inputs - potential for security sanitization...
-    if (!(email & password && first_name && last_name)) {
+    if (!(email && password && first_name && last_name)) {
         res.status(400).send(`All input is required ${email} ${password} ${first_name} ${last_name}`);
     }
 
@@ -15,6 +15,7 @@ const newUser = async (req, res) => {
         { where: { email: email },
         select: { email: true} }
     );
+
 
     if(userExists) {
         return res.status(409).send("User Already Exists.");
@@ -53,6 +54,7 @@ const loginUser = async (req, res) => {
     if (!(email && password)) {
         res.status(400).send("All input is required");
     }
+    
 
     const userExists = await user.findUnique({
         where: {
