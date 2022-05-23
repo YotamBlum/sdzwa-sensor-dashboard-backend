@@ -61,27 +61,24 @@ const loginUser = async (req, res) => {
             email: req.body.email
         },
         select: {
-            email: true
+            firstName: true,
+            lastName: true,
+            email: true,
+            password: true,
+            salt: true
         }
     });
-    if(userExists) {
-        return res.status(400).json({
-            msg: 'User already exists'
-        });
+
+    if (userExists && this.hash === userExists.password) {
+        const token = jwt.sign(
+            { user_id: user._id, email } ,
+            process.env.TOKEN_KEY,
+            {
+                expiresIn: "2h",
+            }
+        );
     }
-
-    var salt = crypto.randomBytes(16).toString('hex');
-
-    const newUser = await user.create({
-        data: {
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            email: req.body.email,
-            password: crypto.pbkdf2Sync(req.body.password, salt, 1000, 64, `sha512`).toString(`hex`),
-            salt: salt,
-        }
-    });
-  res.json({message: "POST new user"});
+    res.status(200).json(userExists);
 };
 
 /* To check valid password
