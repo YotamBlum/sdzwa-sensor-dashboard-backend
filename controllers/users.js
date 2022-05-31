@@ -5,10 +5,10 @@ const crypto = require('crypto');
 // Create new user
 const newUser = async (req, res) => {
     // Get user inputs
-    const { first_name, last_name, email, password } = req.body;
+    const { firstName, lastName, email, password } = req.body;
     // Validate user inputs - potential for security sanitization...
-    if (!(email && password && first_name && last_name)) {
-        res.status(400).send(`All input is required ${email} ${password} ${first_name} ${last_name}`);
+    if (!(email && password && firstName && lastName)) {
+        res.status(400).send(`All input is required ${email} ${password} ${firstName} ${lastName}`);
     }
 
     const userExists = await user.findUnique(
@@ -26,8 +26,8 @@ const newUser = async (req, res) => {
 
     const newUser = await user.create({
         data: {
-            firstName: first_name,
-            lastName: last_name,
+            firstName: firstName,
+            lastName: lastName,
             email: email,
             password: encryptedPassword,
             salt: salt,
@@ -54,7 +54,7 @@ const loginUser = async (req, res) => {
     if (!(email && password)) {
         res.status(400).send("All input is required");
     }
-    
+
 
     const userExists = await user.findUnique({
         where: {
@@ -184,7 +184,7 @@ const updateUserByEmail = async (req, res) => {
     res.json(users);
 };
 
-//Template for deleting admin users from the database by their email 
+//Template for deleting admin users from the database by their email
 const deleteUserByEmail = async (req, res) => {
     const userExists = await user.findUnique({
         where: {
