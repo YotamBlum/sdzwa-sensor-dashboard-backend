@@ -75,6 +75,7 @@ const loginUser = async (req, res) => {
     if (!userExists) {
         return res.status(400).send("User does not exist");
     }
+    
 
     encryptedPassword = crypto.pbkdf2Sync(password, userExists.salt, 1000, 64, `sha512`).toString(`hex`);
     if (encryptedPassword === userExists.password) {
@@ -85,8 +86,8 @@ const loginUser = async (req, res) => {
                 expiresIn: "2h",
             }
         );
-        
-        res.status(200).json(userExists);
+        const ret = {"token": token};
+        res.status(200).json(ret);
 
     } else {
         res.status(401).send("Invalid Email or Password");
