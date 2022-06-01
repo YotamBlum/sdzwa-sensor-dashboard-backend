@@ -9,6 +9,9 @@ router.post('/register', userController.newUser);
 // Login user
 router.post('/login', userController.loginUser);
 
+// Change user password
+router.put('/change-password', userController.changePassword);
+
 // Get all admin users
 router.get('/', userController.getUsers);
 

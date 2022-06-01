@@ -72,8 +72,12 @@ const loginUser = async (req, res) => {
         }
     });
 
+    if (!userExists) {
+        return res.status(400).send("User does not exist");
+    }
+
     encryptedPassword = crypto.pbkdf2Sync(password, userExists.salt, 1000, 64, `sha512`).toString(`hex`);
-    if (userExists && encryptedPassword === userExists.password) {
+    if (encryptedPassword === userExists.password) {
         const token = jwt.sign(
             { user_id: user._id, email } ,
             process.env.TOKEN_KEY,
@@ -89,6 +93,55 @@ const loginUser = async (req, res) => {
     
 
 };
+
+// Change User Password
+const changePassword = async (req, res) => {
+    const { email, password, newPassword } = req.body;
+
+    if (!(email && password && newPassword)) {
+        res.status(400).send("All input is required");
+    }
+
+    const userExists = await user.findUnique({
+        where: {
+            email: req.body.email
+        },
+        select: {
+            firstName: true,
+            lastName: true,
+            email: true,
+            password: true,
+            salt: true
+        }
+    });
+
+    if (!userExists) {
+        return res.status(400).send("User does not exist");
+    }
+
+    encryptedPassword = crypto.pbkdf2Sync(password, userExists.salt, 1000, 64, `sha512`).toString(`hex`);
+    if (encryptedPassword === userExists.password) {
+        const newSalt = crypto.randomBytes(16).toString('hex');
+        const newEncryptedPassword = crypto.pbkdf2Sync(newPassword, newSalt, 1000, 64, `sha512`).toString(`hex`);
+
+        const updatedUser = await user.update({
+            where: {
+                email: email
+            },
+            data: {
+                password: newEncryptedPassword,
+                salt: newSalt
+            }
+        });
+
+        res.status(200).send("Password Changed Successfully");
+    } else {
+        res.status(401).send("Old Password Not Correct");
+    }
+};
+
+
+
 
 /* Below are generic API templates for different CRUD (CREATE READ UPDATE DELETE) operations on the database */
 
@@ -253,4 +306,4 @@ UserSchema.methods.validPassword = function(password) {
 https://www.loginradius.com/blog/engineering/password-hashing-with-nodejs/
 */
 
-module.exports = {newUser, loginUser, getUsers, getUserById, getUserByEmail, getUserByName, updateUserByEmail, deleteUserByEmail};
+module.exports = {newUser, loginUser, changePassword, getUsers, getUserById, getUserByEmail, getUserByName, updateUserByEmail, deleteUserByEmail};
