@@ -77,9 +77,9 @@ const updateSensorById = async (req, res) => {
             }
         });
 
-        if(sensorExists) {
+        if(!sensorExists) {
             return res.status(400).json({
-                msg: 'Sensor with name = ' + req.body.name + ' already exists, choose another name'
+                msg: 'Sensor with name = ' + req.body.name + ' does not exist, choose another name'
             });
         }
     }
@@ -92,12 +92,8 @@ const updateSensorById = async (req, res) => {
             name: req.body.name,
             description: req.body.description,
             type: req.body.type,
-            locationX: req.body.locationX,
-            locationY: req.body.locationY,
-            dateStr: req.body.dateStr,
-            status: req.body.status,
-            installedAt: req.body.installedAt,
-            updatedAt: req.body.updatedAt
+            source: req.body.source,
+            format: req.body.format
         }
     });
 
@@ -153,11 +149,10 @@ const createSensorByName = async (req, res) => {
     const newSensor = await sensor.create({
         data: {
             name: req.body.name,
-            installedAt: req.body.installedAt,
             description: req.body.description,
             type: req.body.type,
-            locationX: req.body.locationX,
-            locationY: req.body.locationY
+            source: req.bodoy.source,
+            format: req.body.format
         }
     });
 
