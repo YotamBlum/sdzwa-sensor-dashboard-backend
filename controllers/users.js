@@ -85,12 +85,13 @@ const loginUser = async (req, res) => {
                 expiresIn: "2h",
             }
         );
-        res.status(200).send("Login Successful");
-        //res.status(200).json(userExists);
+        
+        res.status(200).json(userExists);
+
     } else {
         res.status(401).send("Invalid Email or Password");
     }
-    
+
 
 };
 
@@ -138,6 +139,7 @@ const changePassword = async (req, res) => {
     } else {
         res.status(401).send("Old Password Not Correct");
     }
+    res.status(200).json(userExists);
 };
 
 
