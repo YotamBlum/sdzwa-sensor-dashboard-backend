@@ -7,7 +7,6 @@ const port = 3000;
 
 app.use(express.json());
 app.use(cors());
-
 // app.use('/', routes); // to use routes
 
 app.get('/', (req, res) => {

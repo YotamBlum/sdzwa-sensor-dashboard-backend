@@ -14,7 +14,9 @@ model Sensor {
     id          Int    @id @default(autoincrement())
     name        String @default("") @unique
     description String @default("description")
-    type        Int    @default(-1) // separate table to enumerate types
+    type        String @default("") // separate table to enumerate types
+    source      String @default("")
+    format      String @default("") // format
     locationX   Float  @default(0)
     locationY   Float  @default(0)
     dateStr     String @default("")
@@ -23,8 +25,6 @@ model Sensor {
     updatedAt   Float  @default(0) // date updated
     url         String @default("") //url location of the sensor data
 //   posts       Post[] // for testing
-
-    
 
     @@map(name: "sensor")
 }
