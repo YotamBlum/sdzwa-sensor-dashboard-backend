@@ -17,6 +17,7 @@ app.get('/', (req, res) => {
 app.use('/api/sensor', require('./routes/sensor'));
 app.use('/api/user', require('./routes/users'));
 
+
 app.listen(port, () => {
     console.log('Server is running on port 5000. Docker on 49160');
 })

@@ -15,7 +15,7 @@ const newUser = async (req, res) => {
         { where: { email: email },
         select: { email: true} }
     );
-
+    
 
     if(userExists) {
         return res.status(409).send("User Already Exists.");

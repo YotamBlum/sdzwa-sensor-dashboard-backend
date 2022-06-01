@@ -22,7 +22,7 @@ model Sensor {
     installedAt Float  @default(0) // date installed at zoo
     updatedAt   Float  @default(0) // date updated
     url         String @default("") //url location of the sensor data
-    posts       Post[] // for testing
+//   posts       Post[] // for testing
 
     
 
@@ -58,14 +58,14 @@ model Status {
     @@map(name: "status")
 }
 
-model Post {
-    id         Int      @id @default(autoincrement())
-    title      String
-    content    String
-    created_at DateTime @default(now())
-    updated_at DateTime @updatedAt
-    sensor     Sensor   @relation(fields: [sensor_id], references: [id])
-    sensor_id  Int
+// model Post {
+//     id         Int      @id @default(autoincrement())
+//     title      String
+//     content    String
+//     created_at DateTime @default(now())
+//     updated_at DateTime @updatedAt
+//     sensor     Sensor   @relation(fields: [sensor_id], references: [id])
+//     sensor_id  Int
 
-    @@map(name: "post")
-}
+//     @@map(name: "post")
+// }
