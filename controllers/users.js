@@ -1,6 +1,8 @@
 const {PrismaClient} = require('@prisma/client');
 const {user} = new PrismaClient();
 const crypto = require('crypto');
+const jwt = require("jsonwebtoken");
+
 
 // Create new user
 const newUser = async (req, res) => {
@@ -15,7 +17,7 @@ const newUser = async (req, res) => {
         { where: { email: email },
         select: { email: true} }
     );
-    
+
 
     if(userExists) {
         return res.status(409).send("User Already Exists.");
@@ -32,6 +34,7 @@ const newUser = async (req, res) => {
             password: encryptedPassword,
             salt: salt,
         }
+
     });
 
     const token = jwt.sign(
@@ -43,8 +46,8 @@ const newUser = async (req, res) => {
     );
 
     newUser.token = token;
-
-    res.status(201).json(newUser);
+    res.send("Registration Successful");
+    //res.status(201).json(newUser);
 };
 
 // Login user
@@ -69,7 +72,8 @@ const loginUser = async (req, res) => {
         }
     });
 
-    if (userExists && this.hash === userExists.password) {
+    encryptedPassword = crypto.pbkdf2Sync(password, userExists.salt, 1000, 64, `sha512`).toString(`hex`);
+    if (userExists && encryptedPassword === userExists.password) {
         const token = jwt.sign(
             { user_id: user._id, email } ,
             process.env.TOKEN_KEY,
@@ -77,8 +81,13 @@ const loginUser = async (req, res) => {
                 expiresIn: "2h",
             }
         );
+        res.status(200).send("Login Successful");
+        //res.status(200).json(userExists);
+    } else {
+        res.status(401).send("Invalid Email or Password");
     }
-    res.status(200).json(userExists);
+    
+
 };
 
 /* Below are generic API templates for different CRUD (CREATE READ UPDATE DELETE) operations on the database */
