@@ -22,12 +22,15 @@ const getSensorById = async (req, res) => {
             name: true,
             description: true,
             type: true,
+            source: true,
+            format: true,
             locationX: true,
             locationY: true,
             dateStr: true,
             status: true,
             installedAt: true,
-            updatedAt: true
+            updatedAt: true,
+            url: true
         },
         where: {
             id: parseInt(req.params.id)
@@ -96,6 +99,8 @@ const updateSensorById = async (req, res) => {
             format: req.body.format
         }
     });
+    
+
 
     if (!sensors) {
         return res.status(400).json({
@@ -151,7 +156,7 @@ const createSensorByName = async (req, res) => {
             name: req.body.name,
             description: req.body.description,
             type: req.body.type,
-            source: req.bodoy.source,
+            source: req.body.source,
             format: req.body.format
         }
     });

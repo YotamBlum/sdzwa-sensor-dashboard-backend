@@ -140,7 +140,7 @@ const changePassword = async (req, res) => {
     } else {
         res.status(401).send("Old Password Not Correct");
     }
-    res.status(200).json(userExists);
+
 };
 
 
