@@ -46,7 +46,8 @@ const newUser = async (req, res) => {
     );
 
     newUser.token = token;
-    res.send("Registration Successful");
+    const ret = {"token": token};
+    res.status(200).json(ret);
     //res.status(201).json(newUser);
 };
 
