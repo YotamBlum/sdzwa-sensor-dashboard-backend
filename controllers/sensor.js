@@ -5,7 +5,17 @@ const getAllSensors = async (req, res) => {
     const sensors = await sensor.findMany({
         select: {
             id: true,
-            name: true
+            name: true,
+            description: true,
+            type: true,
+            source: true,
+            locationX: true,
+            locationY: true,
+            dateStr: true,
+            status: true,
+            installedAt: true,
+            updatedAt: true,
+            url: true,
         },
         where: {
 
