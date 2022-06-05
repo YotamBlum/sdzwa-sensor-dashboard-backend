@@ -15,8 +15,8 @@ router.get('/name/:name', userController.getSensorByName);
 // update sensor by id
 router.put('/id/:id', userController.updateSensorById);
 
-//delete sensor by name
-router.delete('/name/:name', userController.deleteSensorByName);
+//delete sensor by id
+router.delete('/id/:id', userController.deleteSensorById);
 
 //create sensor by name
 router.post('/', userController.createSensorByName);
